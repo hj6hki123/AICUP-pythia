@@ -1,5 +1,14 @@
 import argparse
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 def config():
     parser = argparse.ArgumentParser(description="pythia-model")
 
@@ -22,13 +31,9 @@ def config():
                         help="測試集格式路徑",
                         default='./AICUP_datasets/opendid_test/valid_format_file.tsv')
     
-    parser.add_argument("--answer_path",
-                        help="answer",
-                        default='./AICUP_datasets/all-datasets/answer.txt')
-    
-    parser.add_argument("--out_dir",
-                        help="答案輸出位子",
-                        default='./answer.txt')       
+    parser.add_argument("--train_anno_path",
+                        help="訓練集標註黨",
+                        default='./AICUP_datasets/all-datasets/answer.txt')    
 
     parser.add_argument("--epochs",
                         type=int,
@@ -40,9 +45,13 @@ def config():
                         default=4,
                         help="batch_size")
     parser.add_argument("--lora",
-                        type=bool,
+                        type=str2bool,
                         default=True,
                         help="是否啟用lora")
+    parser.add_argument("--wandblog",
+                        type=str2bool,
+                        default=False,
+                        help="是否啟用wandb")
 
     args = parser.parse_args()
 

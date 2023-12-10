@@ -8,7 +8,6 @@ from peft import LoraConfig, TaskType, get_peft_model
 from tqdm import tqdm
 from utility.preprocessing import *
 from dotenv import load_dotenv
-import wandb 
 from torch.cuda.amp import GradScaler, autocast
 from utility.dataloader import CustomDataLoader, CustomBatchSampler
 import config
@@ -38,14 +37,20 @@ tokenizer.padding_side = 'left'
 num_added_toks = tokenizer.add_special_tokens(special_tokens_dict)
 
 ## initailize 
-load_dotenv()
-wandb.login(key=os.getenv("WANDB_API_TOKEN"))
-wandb.init(project="AICUP",config={"batch_size":BATCH_SIZE,"epochs":EPOCHS,"model":base_model,"device":device,"cache_dir":cache_dir,"lr":3e-5})
+print(args.wandblog)
+if args.wandblog:
+    import wandb
+    load_dotenv()
+    key = os.getenv("WANDB_API_TOKEN")
+    if key is None:
+        print('新增.env 設置WANDB_API_TOKEN') 
+    wandb.login(key=key)
+    wandb.init(project="AICUP",config={"batch_size":BATCH_SIZE,"epochs":EPOCHS,"model":base_model,"device":device,"cache_dir":cache_dir,"lr":3e-5})
 
 
 #load datasets
 format_data(args.train_file_dir,# {fix} 訓練資料夾路徑
-            args.answer_path,# {fix} answer 標註檔案路徑
+            args.train_anno_path,# {fix} answer 標註檔案路徑
             args.trainer_output_file)# {fix} 訓練格式 tsv輸出路徑
 dataset = load_dataset("csv", data_files=args.trainer_output_file, delimiter='\t',
                        features = Features({
@@ -145,11 +150,13 @@ for epoch in range(EPOCHS):
         scaler.update()
         total_loss += loss.item()
         s_data_loader.set_postfix({"Loss": loss.item()})
-        wandb.log({"step Loss": loss.item()})
+        if args.wandblog:
+            wandb.log({"step Loss": loss.item()})
 
     avg_train_loss = total_loss / len(bucket_train_dataloader)
     print("Average train loss: {}".format(avg_train_loss))
-    wandb.log({"epoch": epoch, "Loss": avg_train_loss})
+    if args.wandblog:
+        wandb.log({"epoch": epoch, "Loss": avg_train_loss})
 
     # 儲存模型
     torch.save(model.state_dict(), os.path.join(model_dir, 'GPT_Finial.pt'))
