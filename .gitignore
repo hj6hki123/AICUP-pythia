@@ -1,0 +1,10 @@
+*.pkl
+*.pyc
+/FineTuning/*
+!/FineTuning/.gitkeep
+/MODELS/*
+!/MODELS/.gitkeep
+/AICUP_datasets/*
+!/AICUP_datasets/.gitkeep
+/wandb/*
+.env
