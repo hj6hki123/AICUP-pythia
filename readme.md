@@ -34,6 +34,19 @@ conda activate knn-training
 
 第一部份訓練集 + 第二部份訓練集 + 第一部份驗證集
 
+```
+.
+├── AICUP_datasets
+│   ├── all-datasets
+│   │   ├── answer.txt
+│   │   ├── format_file.tsv
+│   │   ├── train_datasets
+│   │   │   ├── 100.txt
+│   │   │   ├── 101.txt
+│   │   │   ├── 102.txt
+│   │   │   ├── 103.txt
+
+```
 ## Usage
 
 -  Train the model
