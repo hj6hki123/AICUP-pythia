@@ -1,6 +1,6 @@
-# Project Name
+# AICUP 隱私保護與醫學數據標準化競賽
 
-隱私保護與醫學數據標準化競賽：解碼臨床病例、讓數據說故事
+
 
 ## Table of Contents
 
@@ -34,6 +34,19 @@ conda activate knn-training
 
 第一部份訓練集 + 第二部份訓練集 + 第一部份驗證集
 
+```
+.
+├── AICUP_datasets
+│   ├── all-datasets
+│   │   ├── answer.txt
+│   │   ├── format_file.tsv
+│   │   ├── train_datasets
+│   │   │   ├── 100.txt
+│   │   │   ├── 101.txt
+│   │   │   ├── 102.txt
+│   │   │   ├── 103.txt
+
+```
 ## Usage
 
 -  Train the model
@@ -54,7 +67,7 @@ python train.py \
 
 ```
 python pred.py \
-  --model_name 'pythia-160m-deduped' \
+  --model_name 'pythia-1b-deduped' \
   --valid_file_dir './AICUP_datasets/all-datasets/train_datasets' \
   --valid_output_file './AICUP_datasets/opendid_test/valid_format_file.tsv' \
   --batch_size 32 \
