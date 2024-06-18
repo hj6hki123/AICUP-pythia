@@ -53,12 +53,12 @@ python train.py \
  -  Test the model
 
 ```
-python train.py \
-  --model_name 'pythia-1b-deduped' \
+python pred.py \
+  --model_name 'pythia-160m-deduped' \
   --valid_file_dir './AICUP_datasets/all-datasets/train_datasets' \
   --valid_output_file './AICUP_datasets/opendid_test/valid_format_file.tsv' \
-  --batch_size 16 \
-  --lora True
+  --batch_size 32 \
+  --lora False
 ```
 
 > ### Parameters

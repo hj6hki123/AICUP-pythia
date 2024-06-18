@@ -106,3 +106,6 @@ def predict(model, tokenizer, input, template = "<|endoftext|> __CONTENT__\n\n##
                 else:
                     outputs.append(f'{input[idx]["fid"]}\t{annotation["phi"]}\t{annotation["st_idx"]}\t{annotation["ed_idx"]}\t{annotation["entity"]}')
     return outputs
+
+
+

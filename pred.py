@@ -104,6 +104,7 @@ with open("./answer.txt",'w',encoding='utf8') as f:
         with torch.no_grad():
             seeds = valid_list[i:i+BATCH_SIZE]
             outputs = predict(model, tokenizer, seeds)
+            print(outputs)
             for o in outputs:
                 f.write(o)
                 f.write('\n')

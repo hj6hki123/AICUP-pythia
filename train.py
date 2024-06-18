@@ -59,7 +59,10 @@ dataset = load_dataset("csv", data_files=args.trainer_output_file, delimiter='\t
                               column_names=['fid', 'idx', 'content', 'label'], keep_default_na=False)
 train_data = list(dataset['train'])
 
-bucket_train_dataloader = CustomDataLoader(train_data, tokenizer, BATCH_SIZE)
+from islab.aicup import collate_batch_with_prompt_template
+bucket_train_dataloader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, collate_fn=lambda batch: collate_batch_with_prompt_template(batch, tokenizer))
+
+# bucket_train_dataloader = CustomDataLoader(train_data, tokenizer, BATCH_SIZE)
 
 ## 4-bit quantization configuration
 compute_dtype = getattr(torch, "float16")

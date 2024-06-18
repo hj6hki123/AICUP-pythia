@@ -17,7 +17,7 @@ class CustomDataLoader(DataLoader):
         # 確保每批資料中包含 'content' 和 'label'
         assert all('content' in data and 'label' in data for data in batch), "Batch data must contain 'content' and 'label' keys"
 
-        # 使用列表解析式進行替換
+        # template進行替換
         texts = [self.template.replace("__LABEL__", data['label']).replace("__CONTENT__", data['content']) for data in batch]
         encoded_seq = self.tokenizer(texts, padding=True, return_tensors='pt')
 

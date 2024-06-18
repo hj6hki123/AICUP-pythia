@@ -5,6 +5,7 @@
 /MODELS/*
 !/MODELS/.gitkeep
 /AICUP_datasets/*
-!/AICUP_datasets/.gitkeep
+!/AICUP_datasets/all-datasets/.gitkeep
+!/AICUP_datasets/opendid_test/.gitkeep
 /wandb/*
 .env
